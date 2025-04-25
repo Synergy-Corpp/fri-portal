@@ -94,6 +94,15 @@
       50% { text-shadow: 0 0 10px #00ffaa; color: #ccffee; }
       100% { text-shadow: none; color: #ffffff; }
     }
+
+    .debug {
+      font-size: 0.8em;
+      color: #888;
+      margin-top: -15px;
+      padding-bottom: 20px;
+      white-space: pre-wrap;
+      max-width: 600px;
+    }
   </style>
 </head>
 <body>
@@ -163,9 +172,12 @@ Breathe. Listen. Then reply.
         });
 
         const data = await res.json();
-        console.log("FULL RESPONSE:", data);
-
         thinking.remove();
+
+        const debug = document.createElement('div');
+        debug.className = 'debug';
+        debug.textContent = "FULL RESPONSE:\n" + JSON.stringify(data, null, 2);
+        replyZone.appendChild(debug);
 
         if (!data.choices || !data.choices[0] || !data.choices[0].message) {
           const fail = document.createElement('div');
